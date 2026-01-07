@@ -92,7 +92,7 @@ function parseCSV(text) {
     if (term.length < 3) continue;
 
     // Convert to hashtag
-    const hashtag = term.replace(/\s+/g, "");
+    const hashtag = term;
 
     hashtags.add(hashtag);
   }
