@@ -66,12 +66,7 @@ function parseCSV(text) {
 
     // ❌ Skip Google Trends query/date line
     // Example: jax: (6/10/25 - 6/1/26, Todo el mundo)
-    if (
-      term.includes(":") &&
-      term.includes("(") &&
-      term.includes(")") &&
-      cols.length === 1
-    ) {
+    if (/^.+:\s*\(.+\)$/.test(line.toLowerCase())) {
       continue;
     }
 
