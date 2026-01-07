@@ -43,7 +43,7 @@ function processCSV() {
 function parseCSV(text) {
   const lines = text.split("\n");
 
-  const blacklist = [
+  const blacklistExact = [
     "top",
     "rising",
     "categoría: todas las categorías"
@@ -55,27 +55,43 @@ function parseCSV(text) {
     line = line.trim();
     if (!line) continue;
 
+    // Remove surrounding quotes
+    line = line.replace(/^"|"$/g, "");
+
     const cols = line.split(",");
-    let term = cols[0]
-      .replace(/"/g, "")
-      .trim()
-      .toLowerCase();
+    let term = cols[0]?.trim().toLowerCase();
 
-    // Skip blacklisted labels
-    if (blacklist.includes(term)) continue;
+    // ❌ Skip known junk headers
+    if (blacklistExact.includes(term)) continue;
 
-    // Skip pure numbers
+    // ❌ Skip Google Trends query/date line
+    // Example: jax: (6/10/25 - 6/1/26, Todo el mundo)
+    if (
+      term.includes(":") &&
+      term.includes("(") &&
+      term.includes(")") &&
+      cols.length === 1
+    ) {
+      continue;
+    }
+
+    // ❌ Skip numeric-only terms
     if (/^\d+$/.test(term)) continue;
 
-    // Skip percentage rows (+250 %, +4.050 %)
-    if (cols[1] && cols[1].includes("%")) continue;
+    // ❌ Skip percentage or "Aumento puntual"
+    if (
+      cols[1] &&
+      (cols[1].includes("%") || cols[1].toLowerCase().includes("aumento"))
+    ) {
+      continue;
+    }
 
-    // Remove extra spaces but keep words
+    // Clean spacing
     term = term.replace(/\s+/g, " ").trim();
 
     if (term.length < 3) continue;
 
-    // Convert to hashtag format
+    // Convert to hashtag
     const hashtag = term.replace(/\s+/g, "");
 
     hashtags.add(hashtag);
@@ -85,6 +101,7 @@ function parseCSV(text) {
     Array.from(hashtags).join(",");
 }
 </script>
+
 
 
 </body>
