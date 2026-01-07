@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>YouTube Hashtag Generator</title>
+  <title>YouTube Trends Hashtag cleaner</title>
   <style>
     body {
       font-family: sans-serif;
@@ -18,11 +18,44 @@
       padding: 10px;
       margin-top: 10px;
     }
+    ol {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
 
 <h1>YouTube Hashtag Generator (Google Trends)</h1>
+
+  <h2>Steps:</h2>
+<ol>
+  <li>
+    Go to:
+    <a href="https://trends.google.com/trends/explore?gprop=youtube" target="_blank" rel="noopener">
+      https://trends.google.com/trends/explore?gprop=youtube
+    </a>
+  </li>
+  <li>
+    Do a search and filter by <strong>date</strong> and <strong>location</strong>
+  </li>
+  <li>
+    Download the CSV file and upload it here
+  </li>
+</ol>
 
 <input type="file" id="csvFile" accept=".csv">
 <button onclick="processCSV()">Generate Hashtags</button>
