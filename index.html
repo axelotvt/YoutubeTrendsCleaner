@@ -79,7 +79,8 @@ function parseCSV(text) {
   const blacklistExact = [
     "top",
     "rising",
-    "categoría: todas las categorías"
+    "categoría: todas las categorías",
+    "category: all categories"
   ];
 
   const hashtags = new Set();
@@ -109,7 +110,7 @@ function parseCSV(text) {
     // ❌ Skip percentage or "Aumento puntual"
     if (
       cols[1] &&
-      (cols[1].includes("%") || cols[1].toLowerCase().includes("aumento"))
+      (cols[1].includes("%") || cols[1].toLowerCase().includes("aumento") || cols[1].toLowerCase().includes("breakout"))
     ) {
       continue;
     }
